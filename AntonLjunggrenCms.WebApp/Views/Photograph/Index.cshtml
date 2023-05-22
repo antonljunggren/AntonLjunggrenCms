@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "Photographs";
+}
+
+@model PhotographViewModel
+
+<div class="text-center">
+    <h1 class="display-4">Website Content Management System</h1>
+    <p class="text-1">For <a href="https://antonljunggren.se">antonljunggren.se</a>.</p>
+</div>
+<div>
+    <h4>Photographs</h4>
+
+    <div class="d-flex justify-content-start flex-wrap">
+        @foreach (var photo in Model.photographs)
+        {
+            <div class="text-center m-3">
+                <a asp-controller="Photograph" asp-action="Edit" asp-route-photoId="@photo.Id">
+                    <img height="300" src="@Url.Action("GetPreviewImage", "Photograph", new{id=photo.Id})" alt="@photo.Title" />
+                    <div class="d-flex justify-content-around">
+                        <form asp-controller="Photograph" asp-action="UpdateOrder" method="post">
+                            <input type="hidden" name="id" value="@photo.Id" />
+                            <input type="hidden" name="raise" value="false" />
+                            <input type="submit" value="<" />
+                        </form>
+                        <p>@photo.Title @(photo.IsPublished ? "" : "- Not published")</p>
+                        <form asp-controller="Photograph" asp-action="UpdateOrder" method="post">
+                            <input type="hidden" name="id" value="@photo.Id" />
+                            <input type="hidden" name="raise" value="true" />
+                            <input type="submit" value=">" />
+                        </form>
+                    </div>
+                    <p>Order - @photo.Order</p>
+                    
+                </a>
+            </div>
+        }
+    </div>
+
+    <form asp-controller="Photograph" asp-action="AddPhotograph" 
+        method="post" enctype="multipart/form-data" class="py-5 form form-group">
+        <h5>Add Photograph</h5>
+        <div class="my-3">
+            <label for="imageFile" class="form-label">Source Image</label>
+            <input class="form-control" type="file" name="imageFile" accept="image/jpeg" maxlength="600000000" />
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="title" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input name="description" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label for="filmUsed" class="form-label">Film Used</label>
+            <input name="filmUsed" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label for="cameraUsed" class="form-label">Camera Used</label>
+            <input name="cameraUsed" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input name="country" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label for="province" class="form-label">Province</label>
+            <input name="province" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input name="city" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label for="dateTaken" class="form-label">Date taken</label>
+            <input name="dateTaken" type="text" class="form-control datepicker" />
+        </div>
+
+        <button class="btn btn-primary" type="submit">Save Photograph</button>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Initialize the datepicker
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm',
+                viewMode: 'months',
+                minViewMode: 'months',
+                autoclose: true,
+                showButtonPanel: true,
+                onClose: function (dateText, inst) {
+                    $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+                }
+            });
+        });
+    </script>
+
+}

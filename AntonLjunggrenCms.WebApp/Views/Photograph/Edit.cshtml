@@ -1,0 +1,116 @@
+﻿@using AntonLjunggrenCms.Core.Models;
+@{
+    ViewData["Title"] = "Edit photograph";
+}
+
+@model Photograph
+
+<div class="text-center">
+    <h1 class="display-4">Edit Photograph</h1>
+    <h2>"@Model.Title"</h2>
+</div>
+
+<img height="300" src="@Url.Action("GetPreviewImage", "Photograph", new{id=Model.Id})" alt="@Model.Title" />
+<img height="400" src="@Url.Action("GetHdImage", "Photograph", new{id=Model.Id})" alt="@Model.Title" />
+
+<form asp-controller="Photograph" asp-action="UpdatePhotograph"
+      method="post"
+      enctype="multipart/form-data"
+      class="py-2 form form-group">
+    <h5>Update Photograph</h5>
+
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <div class="row mb-3">
+        <div class="col">
+            <label for="imageFile" class="form-label">Source Image</label>
+            <input class="form-control" type="file" name="imageFile" accept="image/jpeg" maxlength="600000000" />
+        </div>
+
+        <div class="col">
+            <label for="title" class="form-label">Title</label>
+            <input name="title" class="form-control" value="@Model.Title" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input name="description" class="form-control" value="@Model.Description" />
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">
+            <label for="filmUsed" class="form-label">Film Used</label>
+            <input name="filmUsed" class="form-control" value="@Model.FilmUsed" />
+        </div>
+
+        <div class="col">
+            <label for="cameraUsed" class="form-label">Camera Used</label>
+            <input name="cameraUsed" class="form-control" value="@Model.CameraUsed" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">
+            <label for="country" class="form-label">Country</label>
+            <input name="country" class="form-control" value="@Model.Location.Country" />
+        </div>
+
+        <div class="col">
+            <label for="province" class="form-label">Province</label>
+            <input name="province" class="form-control" value="@(Model.Location.Province ?? "")" />
+        </div>
+
+        <div class="col">
+            <label for="city" class="form-label">City</label>
+            <input name="city" class="form-control" value="@(Model.Location.City ?? "")" />
+        </div>
+
+    </div>
+
+    <div class="mb-3 row">
+        <div class="mb-3 col-3">
+            <label for="dateTaken" class="form-label">Date taken</label>
+            <input name="dateTaken" type="text" class="form-control datepicker" value="@Model.DateTaken" />
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <div class="form-check">
+            <label for="published" class="form-check-label">Published</label>
+            <input name="published" class="form-check-input" asp-for="@Model.IsPublished" />
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Update Photograph</button>
+</form>
+
+<form asp-controller="Photograph" asp-action="DeletePhotograph" method="post" class="form form-group" id="delete-photo-form">
+    <input type="hidden" name="photoId" value="@Model.Id" />
+    <button class="btn btn-danger" type="button" onclick="deletePhotograph()">Delete Photograph</button>
+</form>
+
+@section Scripts {
+    <script type="text/javascript">
+        function deletePhotograph() {
+            var conf = window.confirm("Delete photograph '@(Model.Title)' ?");
+
+            if (conf) {
+                $('#delete-photo-form').submit();
+            }
+        }
+        $(document).ready(function () {
+            // Initialize the datepicker
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm',
+                viewMode: 'months',
+                minViewMode: 'months',
+                autoclose: true,
+                showButtonPanel: true,
+                onClose: function (dateText, inst) {
+                    $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+                }
+            });
+        });
+    </script>
+}

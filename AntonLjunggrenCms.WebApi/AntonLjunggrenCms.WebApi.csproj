@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>26909a90-3c7f-4006-814c-0c3dad6b3d68</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AntonLjunggrenCms.Core\AntonLjunggrenCms.Core.csproj" />
+    <ProjectReference Include="..\AntonLjunggrenCms.Data\AntonLjunggrenCms.Data.csproj" />
+  </ItemGroup>
+
+</Project>
