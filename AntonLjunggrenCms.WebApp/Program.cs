@@ -16,16 +16,16 @@ namespace AntonLjunggrenCms.WebApp
             builder.Services.AddControllersWithViews();
 
             //Ef Context
-            var cosmoDbConn = builder.Configuration.GetConnectionString("cosmo-connection") ?? "";
-            var cosmoDbName = builder.Configuration["cosmo-db-name"] ?? "";
+            var cosmoDbConn = builder.Configuration.GetConnectionString("cosmo_connection") ?? "";
+            var cosmoDbName = builder.Configuration["cosmo_db_name"] ?? "";
 
             builder.Services.AddPooledDbContextFactory<EfContext>(opt =>
                 opt.UseCosmos(cosmoDbConn, cosmoDbName));
 
             builder.Services.AddScoped<IRepository<PhotographEntity, string>, PhotographRepository>();
 
-            var blobConn = builder.Configuration.GetConnectionString("blob-storage-connection") ?? "";
-            var blobContainer = builder.Configuration["blob-storage-container"] ?? "";
+            var blobConn = builder.Configuration.GetConnectionString("blob_storage_connection") ?? "";
+            var blobContainer = builder.Configuration["blob_storage_container"] ?? "";
 
             builder.Services.AddTransient<IFileService>(sp =>
             {
