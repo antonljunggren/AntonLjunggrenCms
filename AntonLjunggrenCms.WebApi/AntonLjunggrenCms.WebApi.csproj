@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AntonLjunggrenCms.Core\AntonLjunggrenCms.Core.csproj" />
     <ProjectReference Include="..\AntonLjunggrenCms.Data\AntonLjunggrenCms.Data.csproj" />
   </ItemGroup>

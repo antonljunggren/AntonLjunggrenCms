@@ -12,6 +12,14 @@ namespace AntonLjunggrenCms.WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //Insights
+            var appiOptions = new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions();
+            appiOptions.EnableAdaptiveSampling = false;
+            appiOptions.EnableQuickPulseMetricStream = false;
+
+            //if(!builder.Environment.IsDevelopment())
+                builder.Services.AddApplicationInsightsTelemetry(appiOptions);
+
             // Add services to the container.
 
             builder.Services.AddControllers();
